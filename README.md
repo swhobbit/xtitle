@@ -20,7 +20,7 @@ For example, the following alias when set in `tcsh` as a pre-prompt
 command will update window title to the specified information before
 every tcsh command prompt:
 
-```tcsh
+```csh
    alias precmd xtitle ${user}@`hostname`:${tty} '${cwd}'
 ```
 

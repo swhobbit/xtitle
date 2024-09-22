@@ -14,14 +14,18 @@
 #include <stdlib.h>
 #include <string.h>
 
-#ifndef pdp11
+#ifdef vax
 char *strstr();
 #endif
 
 int
+#ifdef vax 
 main(argc, argv) 
 	int argc;
 	char **argv;
+#else 
+main(int argc, char **argv)
+#endif 
 {
   char *terminal_type = getenv("TERM");
   char *home = getenv("HOME");
