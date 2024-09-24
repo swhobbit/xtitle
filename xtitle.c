@@ -14,22 +14,14 @@
 #include <stdlib.h>
 #include <string.h>
 
-#ifdef vax
-char *strstr();
-#endif
-
 int
-#ifdef vax 
 main(argc, argv) 
 	int argc;
 	char **argv;
-#else 
-main(int argc, char **argv)
-#endif 
 {
   char *terminal_type = getenv("TERM");
   char *home = getenv("HOME");
-  char *s;
+  char *s = NULL;
   int i;
 
   if (argc == 1) {
@@ -58,7 +50,10 @@ main(int argc, char **argv)
         putchar(' ');
       }
 
-      s = strstr(argv[i], home);
+      /* Only look for home if longer than "~" */
+      if (strlen(home) > 1) {
+        s = strstr(argv[i], home);
+      }
 
       if (NULL == s) {
         printf("%s", argv[i]);      /* Print original string  */
@@ -67,8 +62,8 @@ main(int argc, char **argv)
         /* Print ~ for ${HOME}. Assumes argv is writable! */
         *s = '\0';                  /* Truncate string before ${HOME} */
         printf("%s~%s",             /* print prefix, ~, suffix */
-                argv[i],
-                s + strlen(home));
+               argv[i],
+               s + strlen(home));
         }
       }
     }
